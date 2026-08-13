@@ -1,0 +1,8 @@
+disabled-blocks:
+
+features:
+  pistons: true
+  dispensers: true
+  hoppers: true
+  tnt: true
+  explosions: true
