@@ -106,9 +106,9 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onRedstone(BlockRedstoneEvent event) {
 
-        if (disabledBlocks.contains(event.getBlock().getType())) {
-            event.setNewCurrent(0);
-        }
+    if (!getConfig().getBoolean("features.redstone-signals")) {
+        return;
+        event.setNewCurrent(0);
     }
 
     // Piston check
@@ -124,15 +124,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     public void onPistonRetract(BlockPistonRetractEvent event) {
 
         if (getConfig().getBoolean("features.pistons")) {
-            event.setCancelled(true);
-        }
-    }
-
-    // Disable physics on Redstone block
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
-    public void onPhysics(BlockPhysicsEvent event) {
-
-        if (disabledBlocks.contains(event.getBlock().getType())) {
             event.setCancelled(true);
         }
     }
@@ -211,6 +202,20 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
             if (event.getInventory().getType().name().contains("HOPPER")) {
                 event.setCancelled(true);
             }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
+    public void onPlayerInteract(PlayerInteractEvent event) {
+
+        if (!getConfig().getBoolean("features.tnt")) {
+            return;
+        }
+
+        if (event.getClickedBlock() != null
+                && event.getClickedBlock().getType() == Material.TNT) {
+
+            event.setCancelled(true);
         }
     }
 
