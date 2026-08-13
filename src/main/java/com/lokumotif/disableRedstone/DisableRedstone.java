@@ -54,7 +54,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onRedstone(BlockRedstoneEvent event) {
         event.setNewCurrent(0);
-    
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
