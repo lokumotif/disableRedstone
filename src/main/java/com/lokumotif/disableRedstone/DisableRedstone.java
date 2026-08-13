@@ -87,8 +87,12 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         }
 
         getLogger().info(
-            disabledBlocks.size() + " Block loaded successfully: " + name
+            disabledBlocks.size() + " Block loaded successfully: " + disabledBlocks.size()
         );
+
+        for (Material material : disabledBlocks) {
+        getLogger().info("  - " + material.name());
+        }
     }
 
     // Redstone blocking
