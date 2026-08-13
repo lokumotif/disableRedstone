@@ -3,6 +3,7 @@ package com.lokumotif.disableRedstone;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -35,7 +36,13 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
         getServer().getPluginManager().registerEvents(this, this);
 
-        getCommand("disableRedstone").setExecutor(this);
+        PluginCommand command = getCommand("disableRedstone");
+        
+        if (command != null) {
+            command.setExecutor(this);
+        } else {
+            getLogger().severe("disableRedstone command could not be found in plugin.yml!");
+        }
 
         getLogger().info("disableRedstone enabled.");
         
