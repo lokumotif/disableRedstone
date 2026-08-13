@@ -39,6 +39,9 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
         getLogger().info("disableRedstone enabled.");
         
+        }
+    
+    @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         
         if (!command.getName().equalsIgnoreCase("disableRedstone")) {
@@ -59,8 +62,8 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
             return true;
         }
         
-            sender.sendMessage("§euse this command: /disableRedstone reload");
-            return true;
+        sender.sendMessage("§euse this command: /disableRedstone reload");
+        return true;
     }
 
     private void loadConfig() {
