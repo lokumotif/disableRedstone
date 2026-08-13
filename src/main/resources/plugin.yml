@@ -2,3 +2,14 @@ name: disableRedstone
 version: 0.0.3
 main: com.lokumotif.disableRedstone.DisableRedstone
 api-version: '1.21'
+
+commands:
+  disableRedstone:
+    description: Reload disableRedstone configuration
+    usage: /disableRedstone reload
+    permission: disableredstone.reload
+
+permissions:
+  disableredstone.reload:
+    description: Allows reloading disableRedstone
+    default: op
