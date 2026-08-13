@@ -36,31 +36,31 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         getServer().getPluginManager().registerEvents(this, this);
 
         getCommand("disableRedstone").setExecutor(this);
-        public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
+        getLogger().info("disableRedstone enabled.");
         
-            if (!command.getName().equalsIgnoreCase("disableRedstone")) {
-                return false;
-            }
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         
-            if (!sender.hasPermission("disableredstone.reload")) {
-                sender.sendMessage("§cYou have not permission to use this command.");
-                return true;
-            }
+        if (!command.getName().equalsIgnoreCase("disableRedstone")) {
+            return false;
+        }
         
-            if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
-        
-                reloadConfig();
-                loadConfig();
-        
-                sender.sendMessage("§aReloaded..");
-                return true;
-            }
-        
-            sender.sendMessage("§euse this command: /disableRedstone reload");
+        if (!sender.hasPermission("disableredstone.reload")) {
+            sender.sendMessage("§cYou have not permission to use this command.");
             return true;
         }
         
-        getLogger().info("disableRedstone enabled.");
+        if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
+        
+            reloadConfig();
+            loadConfig();
+        
+            sender.sendMessage("§aReloaded..");
+            return true;
+        }
+        
+            sender.sendMessage("§euse this command: /disableRedstone reload");
+            return true;
     }
 
     private void loadConfig() {
