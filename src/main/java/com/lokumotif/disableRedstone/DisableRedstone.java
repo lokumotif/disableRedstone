@@ -19,6 +19,7 @@ import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class DisableRedstone extends JavaPlugin implements Listener {
+    
     private static final Set<Material> REDSTONE_COMPONENTS = EnumSet.of(
             Material.REDSTONE_WIRE,
             Material.REDSTONE_TORCH,
@@ -61,15 +62,17 @@ public final class DisableRedstone extends JavaPlugin implements Listener {
     public void onPistonExtend(BlockPistonExtendEvent event) {
         event.setCancelled(true);
     }
-
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
-    public void onPoweredRail(BlockPoweredRailEvent event) {
-        event.setCancelled(true);
-    }
-
+    
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onPistonRetract(BlockPistonRetractEvent event) {
         event.setCancelled(true);
+    }
+    
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
+    public void onRedstone(BlockRedstoneEvent event) {
+        if (event.getBlock().getType() == Material.POWERED_RAIL) {
+            event.setNewCurrent(0);
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
