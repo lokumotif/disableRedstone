@@ -69,13 +69,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener {
     public void onPistonRetract(BlockPistonRetractEvent event) {
         event.setCancelled(true);
     }
-    
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
-    public void onRedstone(BlockRedstoneEvent event) {
-        if (event.getBlock().getType() == Material.POWERED_RAIL) {
-            event.setNewCurrent(0);
-        }
-    }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onPhysics(BlockPhysicsEvent event) {
