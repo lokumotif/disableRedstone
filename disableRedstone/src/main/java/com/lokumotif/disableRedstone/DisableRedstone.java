@@ -1,4 +1,4 @@
-package disableRedstone.disableRedstone;
+package com.lokumotif.disableRedstone;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
