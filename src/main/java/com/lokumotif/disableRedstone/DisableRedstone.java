@@ -17,6 +17,8 @@ import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import java.util.Set;
+import java.util.EnumSet;
 
 public final class DisableRedstone extends JavaPlugin implements Listener {
     
