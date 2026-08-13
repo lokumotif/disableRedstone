@@ -109,7 +109,8 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         if (!getConfig().getBoolean("features.redstone-signals")) {
             event.setNewCurrent(0);
         }
-
+    }
+    
     // Piston check
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onPistonExtend(BlockPistonExtendEvent event) {
