@@ -1,6 +1,9 @@
+// You can type to disable " true"
+
 disabled-blocks:
 
 features:
+  redstone-signals: true
   pistons: true
   dispensers: true
   hoppers: true
