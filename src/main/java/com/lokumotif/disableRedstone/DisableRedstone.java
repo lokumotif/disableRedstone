@@ -19,6 +19,7 @@ import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.entity.EntityType;
 
 import java.util.HashSet;
 import java.util.List;
@@ -168,13 +169,9 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onEntityExplode(EntityExplodeEvent event) {
 
-        if (!getConfig().getBoolean("features.tnt")) {
-
-            if (event.getEntity() != null &&
-                event.getEntity().getType().name().equals("PRIMED_TNT")) {
-
-                event.setCancelled(true);
-            }
+        if (!getConfig().getBoolean("features.tnt")
+                && event.getEntity().getType() == EntityType.TNT) {
+            event.setCancelled(true);
         }
     }
 
