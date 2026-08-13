@@ -20,6 +20,7 @@ import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.entity.EntityType;
+import org.bukkit.event.entity.EntitySpawnEvent;
 
 import java.util.HashSet;
 import java.util.List;
@@ -215,6 +216,19 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
             event.setCancelled(true);
         }
     }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
+    public void onTntPrime(EntitySpawnEvent event) {
+
+        if (getConfig().getBoolean("features.tnt")) {
+            return;
+        }
+
+        if (event.getEntityType() == EntityType.TNT) {
+            event.setCancelled(true);
+        }
+    }
+    
 
     // /disableRedstone reload
     public void reloadPluginConfig() {
