@@ -1,4 +1,4 @@
 name: disableRedstone
-version: 1.0.0
+version: 0.0.2
 main: com.lokumotif.disableRedstone.DisableRedstone
 api-version: '1.21'
