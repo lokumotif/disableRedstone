@@ -107,7 +107,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     public void onRedstone(BlockRedstoneEvent event) {
 
         if (!getConfig().getBoolean("features.redstone-signals")) {
-            return;
             event.setNewCurrent(0);
         }
 
