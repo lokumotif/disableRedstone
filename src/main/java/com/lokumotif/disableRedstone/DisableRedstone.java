@@ -46,7 +46,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
         getLogger().info("disableRedstone enabled.");
         
-        }
+    }
     
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
