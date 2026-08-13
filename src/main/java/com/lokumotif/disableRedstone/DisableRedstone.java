@@ -44,7 +44,8 @@ public final class DisableRedstone extends JavaPlugin implements Listener {
             Material.BAMBOO_PRESSURE_PLATE, Material.CRIMSON_PRESSURE_PLATE,
             Material.WARPED_PRESSURE_PLATE,
             Material.POWERED_RAIL
-        );
+    );
+    
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
