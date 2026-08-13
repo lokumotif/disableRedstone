@@ -115,7 +115,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onPistonExtend(BlockPistonExtendEvent event) {
 
-        if (getConfig().getBoolean("features.pistons")) {
+        if (!getConfig().getBoolean("features.pistons")) {
             event.setCancelled(true);
         }
     }
@@ -123,7 +123,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onPistonRetract(BlockPistonRetractEvent event) {
 
-        if (getConfig().getBoolean("features.pistons")) {
+        if (!getConfig().getBoolean("features.pistons")) {
             event.setCancelled(true);
         }
     }
@@ -143,7 +143,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onDispense(BlockDispenseEvent event) {
 
-        if (getConfig().getBoolean("features.dispensers")) {
+        if (!getConfig().getBoolean("features.dispensers")) {
 
             Material type = event.getBlock().getType();
 
@@ -159,7 +159,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onBlockExplode(BlockExplodeEvent event) {
 
-        if (getConfig().getBoolean("features.explosions")) {
+        if (!getConfig().getBoolean("features.explosions")) {
             event.setCancelled(true);
         }
     }
@@ -168,7 +168,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onEntityExplode(EntityExplodeEvent event) {
 
-        if (getConfig().getBoolean("features.tnt")) {
+        if (!getConfig().getBoolean("features.tnt")) {
 
             if (event.getEntity() != null &&
                 event.getEntity().getType().name().equals("PRIMED_TNT")) {
@@ -182,7 +182,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onHopperMove(InventoryMoveItemEvent event) {
 
-        if (getConfig().getBoolean("features.hoppers")) {
+        if (!getConfig().getBoolean("features.hoppers")) {
 
             if (event.getSource().getType().name().contains("HOPPER") ||
                 event.getDestination().getType().name().contains("HOPPER") ||
