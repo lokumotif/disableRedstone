@@ -78,14 +78,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
-    public void onPlace(BlockPlaceEvent event) {
-        if (REDSTONE_COMPONENTS.contains(event.getBlockPlaced().getType())) {
-            event.setCancelled(true);
-            event.getPlayer().sendMessage("§cRedstone is disabled.");
-        }
-    }
-
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onInteract(PlayerInteractEvent event) {
         if (event.getClickedBlock() != null &&
             REDSTONE_COMPONENTS.contains(event.getClickedBlock().getType())) {
