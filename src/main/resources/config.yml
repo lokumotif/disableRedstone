@@ -1,11 +1,12 @@
-# You can type to disable " true "
+# You can type to disable " false "
 
 disabled-blocks:
 
 features:
+  redstone: true
   redstone-signals: true
   pistons: true
   dispensers: true
   hoppers: true
-  tnt: true
+  tnt-priming: true
   explosions: true
