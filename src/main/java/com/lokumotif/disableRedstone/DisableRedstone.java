@@ -44,7 +44,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
         getServer().getPluginManager().registerEvents(this, this);
 
-        PluginCommand command = getCommand("disableRedstone");
+        PluginCommand command = getCommand("dr");
         
         if (command != null) {
             command.setExecutor(this);
