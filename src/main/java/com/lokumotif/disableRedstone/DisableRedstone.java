@@ -12,7 +12,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.block.BlockRedstoneEvent;
-import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.TNTPrimeEvent;
@@ -22,7 +21,6 @@ import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.entity.EntityType;
-import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 
 import java.util.HashSet;
@@ -127,7 +125,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onRedstone(BlockRedstoneEvent event) {
 
-        if (!getConfig().getBoolean("features.redstone")) {
+        if (getConfig().getBoolean("features.redstone")) {
             return;
         }
     
@@ -243,7 +241,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         }
     
         // Disable Redstone components
-        if (getConfig().getBoolean("features.redstone")
+        if (!getConfig().getBoolean("features.redstone")
                 && isRedstoneComponent(block.getType())) {
             event.setCancelled(true);
         }
@@ -252,7 +250,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onTntPrime(EntitySpawnEvent event) {
 
-        if (getConfig().getBoolean("features.tnt")) {
+        if (getConfig().getBoolean("features.tnt-priming")) {
             return;
         }
 
@@ -261,13 +259,4 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
-    public void onBlockRedstone(BlockRedstoneEvent event) {
-    
-        if (!getConfig().getBoolean("features.redstone")) {
-            return;
-        }
-    
-        event.setNewCurrent(0);
     }
-}
