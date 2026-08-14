@@ -95,7 +95,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         
-        if (!command.getName().equalsIgnoreCase("disableRedstone")) {
+        if (!command.getName().equalsIgnoreCase("dr")) {
             return false;
         }
         
