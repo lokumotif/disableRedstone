@@ -1,7 +1,6 @@
 # Plugin configuration for disableRedstone
 # - disabled-blocks is a YAML list of block/material names to exclude from checks.
 # Blocks for which interactions should be ignored (no special handling).
-# Example items: REDSTONE_WIRE, PISTON, STICKY_PISTON, HOPPER, DISPENSER, TNT
 # - To turn a feature off, set the value to the boolean false
 
 disabled-blocks:
