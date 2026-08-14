@@ -128,8 +128,10 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     public void onRedstone(BlockRedstoneEvent event) {
 
         if (!getConfig().getBoolean("features.redstone")) {
-            event.setNewCurrent(0);
+            return;
         }
+    
+        event.setNewCurrent(0);
     }
     
     // Piston check
@@ -223,7 +225,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onHopperPickup(InventoryPickupItemEvent event) {
 
-        if (getConfig().getBoolean("features.hoppers")) {
+        if (!getConfig().getBoolean("features.hoppers")) {
 
             if (event.getInventory().getType().name().contains("HOPPER")) {
                 event.setCancelled(true);
@@ -240,20 +242,22 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
             return;
         }
     
-        //  Disable TNT interact
-        if (!getConfig().getBoolean("features.tnt-priming")
-                && block.getType() == Material.TNT) {
-            event.setCancelled(true);
-            return;
-        }
-    
         // Disable Redstone components
         if (getConfig().getBoolean("features.redstone")
                 && isRedstoneComponent(block.getType())) {
             event.setCancelled(true);
         }
     }
+    
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
+    public void onTntPrime(TNTPrimeEvent event) {
+    
+        if (!getConfig().getBoolean("features.tnt-priming")) {
+            event.setCancelled(true);
+        }
+    }
 
+    
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onTntPrime(EntitySpawnEvent event) {
 
@@ -264,5 +268,15 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         if (event.getEntityType() == EntityType.TNT) {
             event.setCancelled(true);
         }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
+    public void onBlockRedstone(BlockRedstoneEvent event) {
+    
+        if (!getConfig().getBoolean("features.redstone")) {
+            return;
+        }
+    
+        event.setNewCurrent(0);
     }
 }
