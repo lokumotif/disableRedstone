@@ -5,6 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -53,9 +54,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     }
     
     private boolean isRedstoneComponent(Material type) {
-
         return switch (type) {
-
             case REDSTONE_WIRE,
                  REDSTONE_TORCH,
                  REDSTONE_WALL_TORCH,
@@ -202,7 +201,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onTntPrime(TNTPrimeEvent event) {
 
-    if (!getConfig().getBoolean("features.tnt")) {
+    if (!getConfig().getBoolean("features.tnt-priming")) {
         event.setCancelled(true);
         }
     }
