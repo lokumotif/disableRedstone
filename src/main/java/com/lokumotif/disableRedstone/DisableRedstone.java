@@ -258,5 +258,4 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
             event.setCancelled(true);
         }
     }
-
-    }
+}
