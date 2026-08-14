@@ -14,12 +14,14 @@ import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.block.TNTPrimeEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.entity.EntityType;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 
 import java.util.HashSet;
@@ -50,6 +52,27 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         
     }
     
+    private boolean isRedstoneComponent(Material type) {
+
+        return switch (type) {
+
+            case REDSTONE_WIRE,
+                 REDSTONE_TORCH,
+                 REDSTONE_WALL_TORCH,
+                 REPEATER,
+                 COMPARATOR,
+                 POWERED_RAIL,
+                 DETECTOR_RAIL,
+                 ACTIVATOR_RAIL,
+                 TARGET,
+                 SCULK_SENSOR,
+                 CALIBRATED_SCULK_SENSOR -> true;
+
+            default -> false;
+        };
+    }
+
+    
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         
@@ -67,7 +90,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
             reloadConfig();
             loadConfig();
         
-            sender.sendMessage("§aReloaded..");
+            sender.sendMessage("§aReloaded successfully.");
             return true;
         }
         
@@ -166,15 +189,24 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         }
     }
 
-    // TNT explosion
+    // Entity explosion
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onEntityExplode(EntityExplodeEvent event) {
 
-        if (!getConfig().getBoolean("features.tnt")
-                && event.getEntity().getType() == EntityType.TNT) {
-            event.setCancelled(true);
+    if (!getConfig().getBoolean("features.explosions")) {
+        event.blockList().clear();
         }
     }
+
+    // TNT interact block
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
+    public void onTntPrime(TNTPrimeEvent event) {
+
+    if (!getConfig().getBoolean("features.tnt")) {
+        event.setCancelled(true);
+        }
+    }
+    
 
     // Hopper item transfer
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
@@ -204,15 +236,24 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
-    public void onPlayerInteract(PlayerInteractEvent event) {
-
-        if (!getConfig().getBoolean("features.tnt")) {
+    public void onRedstoneInteract(PlayerInteractEvent event) {
+    
+        Block block = event.getClickedBlock();
+    
+        if (block == null) {
             return;
         }
-
-        if (event.getClickedBlock() != null
-                && event.getClickedBlock().getType() == Material.TNT) {
-
+    
+        //  Disable TNT interact
+        if (!getConfig().getBoolean("features.tnt-priming")
+                && block.getType() == Material.TNT) {
+            event.setCancelled(true);
+            return;
+        }
+    
+        // Disable Redstone components
+        if (getConfig().getBoolean("features.redstone")
+                && isRedstoneComponent(block.getType())) {
             event.setCancelled(true);
         }
     }
@@ -227,15 +268,5 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         if (event.getEntityType() == EntityType.TNT) {
             event.setCancelled(true);
         }
-    }
-    
-
-    // /disableRedstone reload
-    public void reloadPluginConfig() {
-
-        reloadConfig();
-        loadConfig();
-
-        getLogger().info("Loaded successfully.");
     }
 }
