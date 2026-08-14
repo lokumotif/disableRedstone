@@ -252,7 +252,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onTntPrime(EntitySpawnEvent event) {
 
-        if (getConfig().getBoolean("features.tnt")) {
+        if (getConfig().getBoolean("features.tnt-priming")) {
             return;
         }
 
