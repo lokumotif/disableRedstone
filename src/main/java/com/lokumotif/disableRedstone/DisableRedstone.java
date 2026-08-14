@@ -4,11 +4,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
+import org.bukkit.entity.EntityType;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.block.BlockRedstoneEvent;
@@ -16,12 +14,16 @@ import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.TNTPrimeEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.EntitySpawnEvent;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.inventory.InventoryPickupItemEvent;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.entity.EntityType;
-import org.bukkit.event.entity.EntitySpawnEvent;
+
 
 import java.util.HashSet;
 import java.util.List;
@@ -141,11 +143,11 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     // Redstone blocking
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onRedstone(BlockRedstoneEvent event) {
-
+    
         if (getConfig().getBoolean("features.redstone")
-                && (block.getType() == Material.REPEATER
-                || block.getType() == Material.COMPARATOR)) {
-            event.setCancelled(true);
+                && (event.getBlock().getType() == Material.REPEATER
+                || event.getBlock().getType() == Material.COMPARATOR)) {
+            event.setNewCurrent(0);
         }
     }
     
