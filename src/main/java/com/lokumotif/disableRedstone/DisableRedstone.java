@@ -65,6 +65,19 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
             default -> false;
         };
     }
+    
+    private boolean isInteractionBlock(Material type) {
+        return switch (type) {
+            case NOTE_BLOCK,
+                 FURNACE,
+                 BLAST_FURNACE,
+                 SMOKER,
+                 CHEST,
+                 BARREL -> true;
+    
+            default -> false;
+        };
+    }
 
     
     @Override
@@ -125,11 +138,11 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onRedstone(BlockRedstoneEvent event) {
 
-        if (getConfig().getBoolean("features.redstone")) {
-            return;
+        if (getConfig().getBoolean("features.redstone")
+                && (block.getType() == Material.REPEATER
+                || block.getType() == Material.COMPARATOR)) {
+            event.setCancelled(true);
         }
-    
-        event.setNewCurrent(0);
     }
     
     // Piston check
@@ -152,10 +165,14 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     // Block interact redstones
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onInteract(PlayerInteractEvent event) {
-
+    
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) {
+            return;
+        }
+    
         if (event.getClickedBlock() != null &&
             disabledBlocks.contains(event.getClickedBlock().getType())) {
-
+    
             event.setCancelled(true);
         }
     }
