@@ -24,7 +24,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
-
+import java.io.File;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,6 +35,9 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
     @Override
     public void onEnable() {
+
+        File configFile = new File(getDataFolder(), "config.yml");
+        boolean configMissing = !configFile.exists();
 
         saveDefaultConfig();
         loadConfig();
@@ -50,7 +53,10 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         }
 
         getLogger().info("disableRedstone enabled.");
-        
+
+        if (configMissing) {
+            getLogger().warning("config.yml was missing and has been recreated!");
+        }
     }
     
     private boolean isRedstoneComponent(Material type) {
