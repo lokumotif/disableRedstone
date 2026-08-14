@@ -5,8 +5,6 @@
 # - To turn a feature off, set the value to the boolean false
 
 disabled-blocks:
-  - REDSTONE_WIRE
-  - STONE_BUTTON
 
 features:
   redstone: true
