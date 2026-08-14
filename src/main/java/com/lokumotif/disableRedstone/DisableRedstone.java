@@ -68,11 +68,15 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     
     private boolean isInteractionBlock(Material type) {
         return switch (type) {
-            case NOTE_BLOCK,
-                 FURNACE,
-                 BLAST_FURNACE,
-                 SMOKER,
-                 CHEST,
+            case HOPPER,
+                 CRAFTER,
+                 DISPENSER,
+                 DROPPER,
+                 REPEATER,
+                 COMPARATOR,
+                 TNT,
+                 END_CRYSTAL,
+                 RESPAWN_ANCHOR,
                  BARREL -> true;
     
             default -> false;
