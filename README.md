@@ -4,6 +4,8 @@
 
 disableRedstone is a lightweight Minecraft server plugin that disables Redstone and all Redstone interactions and mechanics on your server. It is useful for servers that want to avoid Redstone-based automation, lag from Redstone contraptions, or simply prefer gameplay without Redstone.
 
+Quick features: blocks Redstone dust and components, prevents activation of Redstone devices, and runs with low overhead — see the Features section below for details.
+
 
 ## Features
 
