@@ -69,14 +69,25 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     
     private boolean isRedstoneComponent(Material type) {
         return switch (type) {
-            case REPEATER,
+            case REDSTONE_WIRE,
+                 REDSTONE_TORCH,
+                 REDSTONE_WALL_TORCH,
+                 REPEATER,
                  COMPARATOR,
+                 OBSERVER,
                  POWERED_RAIL,
                  DETECTOR_RAIL,
                  ACTIVATOR_RAIL,
                  TARGET,
                  SCULK_SENSOR,
-                 CALIBRATED_SCULK_SENSOR -> true;
+                 CALIBRATED_SCULK_SENSOR,
+                 PISTON,
+                 STICKY_PISTON,
+                 DISPENSER,
+                 DROPPER,
+                 HOPPER,
+                 NOTE_BLOCK,
+                 CRAFTER -> true;
 
             default -> false;
         };
@@ -161,7 +172,8 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     
         if (!getConfig().getBoolean("features.redstone")
                 && (event.getBlock().getType() == Material.REPEATER
-                || event.getBlock().getType() == Material.COMPARATOR)) {
+                || event.getBlock().getType() == Material.COMPARATOR)) 
+                || event.getBlock().getType() == Material.COPPER_BULB)) {
             event.setNewCurrent(0);
         }
     }
