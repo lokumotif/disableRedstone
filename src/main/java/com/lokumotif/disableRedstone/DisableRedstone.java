@@ -193,8 +193,8 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
             event.setNewCurrent(0);
         }
 
-        if (!getConfig().getBoolean("features.redstone-lamps"))
-                && isRedstoneLamp(block.getType())) {
+        if (!getConfig().getBoolean("features.redstone-lamps")
+                && isRedstoneLamp(event.getBlock().getType())) {
             event.setCancelled(true);
         }
    
