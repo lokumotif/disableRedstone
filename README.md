@@ -2,7 +2,7 @@
 
 <img width="161" height="161" align="left" alt="disableRedstone logo" src="https://github.com/user-attachments/assets/83f38771-bb4b-4451-bd68-33951a386c8b" />
 
-disableRedstone is a lightweight Minecraft server plugin that disables Redstone and all Redstone interactions and mechanics on your server. It is useful for servers that want to avoid Redstone-based automation, lag from Redstone contraptions, or simply prefer gameplay without Redstone.
+disableRedstone is a lightweight Minecraft server plugin that disables Redstone and all Redstone interactions and mechanics on your server. It is useful for servers that want to avoid Redstone-base[...]
 
 Quick features: blocks Redstone dust and components, prevents activation of Redstone devices, and runs with low overhead — see the Features section below for details.
 
@@ -32,7 +32,7 @@ After installation, Redstone mechanics will be disabled automatically. Test by p
 
 ## Compatibility
 
-This plugin is intended for Bukkit/Spigot/Paper-compatible Minecraft servers. If you encounter issues with a specific server version, please open an issue and include your server type and version.
+This plugin is intended for Bukkit/Spigot/Paper-compatible Minecraft servers. It has been tested and currently works on Minecraft 1.21.11. If you encounter issues with a specific server version, please open an issue and include your server type and version.
 
 
 ## Contributing
@@ -48,7 +48,7 @@ Please include a short description of your change and why it's needed.
 
 ## License — Free to Use
 
-This project is released under the MIT License — you are free to use, modify, and distribute it, including in closed-source or commercial projects. See the [LICENSE](LICENSE) file for the full license text.
+This project is released under the MIT License — you are free to use, modify, and distribute it, including in closed-source or commercial projects. See the [LICENSE](LICENSE) file for the full l[...]
 
 If you'd like attribution or a note in your server's credits, it's appreciated but not required.
 
