@@ -104,7 +104,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
                  TNT,
                  END_CRYSTAL,
                  RESPAWN_ANCHOR,
-                 BARREL 
+                 BARREL -> true;
     
             default -> false;
         };
