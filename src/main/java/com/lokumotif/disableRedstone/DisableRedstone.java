@@ -159,7 +159,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onRedstone(BlockRedstoneEvent event) {
     
-        if (getConfig().getBoolean("features.redstone")
+        if (!getConfig().getBoolean("features.redstone")
                 && (event.getBlock().getType() == Material.REPEATER
                 || event.getBlock().getType() == Material.COMPARATOR)) {
             event.setNewCurrent(0);
