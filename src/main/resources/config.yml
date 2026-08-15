@@ -13,3 +13,4 @@ features:
   hoppers: true
   tnt-priming: true
   explosions: true
+  redstone-lamps: true
