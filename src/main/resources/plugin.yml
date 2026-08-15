@@ -9,6 +9,11 @@ commands:
     usage: /dr reload
     permission: disableredstone.reload
 
+  disableredstone:
+    description: Reload disableRedstone configuration
+    usage: /disableredstone reload
+    permission: disableredstone.reload
+
 permissions:
   disableredstone.reload:
     description: Allows reloading disableRedstone
