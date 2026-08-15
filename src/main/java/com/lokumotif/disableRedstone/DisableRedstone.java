@@ -44,10 +44,18 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
         getServer().getPluginManager().registerEvents(this, this);
 
-        PluginCommand command = getCommand("dr");
+        PluginCommand drCommand = getCommand("dr");
         
-        if (command != null) {
-            command.setExecutor(this);
+        if (drCommand != null) {
+            drCommand.setExecutor(this);
+        } else {
+            getLogger().severe("dr command could not be found in plugin.yml!");
+        }
+        
+        PluginCommand disableredstoneCommand = getCommand("disableredstone");
+        
+        if (disableredstoneCommand != null) {
+            disableredstoneCommand.setExecutor(this);
         } else {
             getLogger().severe("disableRedstone command could not be found in plugin.yml!");
         }
@@ -95,7 +103,8 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         
-        if (!command.getName().equalsIgnoreCase("dr")) {
+        if (!command.getName().equalsIgnoreCase("dr")
+                && !command.getName().equalsIgnoreCase("disableredstone")) {
             return false;
         }
         
@@ -113,7 +122,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
             return true;
         }
         
-        sender.sendMessage("§euse this command: /disableRedstone reload");
+        sender.sendMessage("§euse this command: /disableredstone reload");
         return true;
     }
 
