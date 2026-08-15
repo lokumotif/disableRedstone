@@ -192,6 +192,12 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
                 || event.getBlock().getType() == Material.COPPER_BULB)) {
             event.setNewCurrent(0);
         }
+
+        if (!getConfig().getBoolean("features.redstone-lamps"))
+                && isRedstoneLamp(block.getType())) {
+            event.setCancelled(true);
+        }
+   
     }
     
     // Piston check
@@ -260,13 +266,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
-    public void isRedstoneLamp(BlockRedstoneEvent event) {
-
-        if (!getConfig().getBoolean("features.redstone-lamps")) {
-            event.setCancelled(true);
-        }
-    }
 
     // TNT interact block
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
