@@ -13,6 +13,7 @@ import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.TNTPrimeEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.EventHandler;
@@ -297,6 +298,41 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         }
     }
     
+    // --- Redstone Lamp handlers ---
+    // Prevent lamps from receiving redstone power (stop them lighting)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
+    public void onRedstoneLampBlockRedstone(BlockRedstoneEvent event) {
+        Material type = event.getBlock().getType();
+        if (!getConfig().getBoolean("features.redstone-lamps") &&
+            (type == Material.REDSTONE_LAMP || type == Material.LIT_REDSTONE_LAMP)) {
+            // Remove any new power so the lamp won't light
+            event.setNewCurrent(0);
+        }
+    }
+
+    // Prevent placement of redstone lamps when feature disabled
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
+    public void onRedstoneLampPlace(BlockPlaceEvent event) {
+        Material type = event.getBlockPlaced().getType();
+        if (!getConfig().getBoolean("features.redstone-lamps") &&
+            (type == Material.REDSTONE_LAMP || type == Material.LIT_REDSTONE_LAMP)) {
+            event.setCancelled(true);
+        }
+    }
+
+    // Prevent players interacting with lamps (right-click)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
+    public void onRedstoneLampInteract(PlayerInteractEvent event) {
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+        Block block = event.getClickedBlock();
+        if (block == null) return;
+        Material type = block.getType();
+        if (!getConfig().getBoolean("features.redstone-lamps") &&
+            (type == Material.REDSTONE_LAMP || type == Material.LIT_REDSTONE_LAMP)) {
+            event.setCancelled(true);
+        }
+    }
+
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onTntPrime(EntitySpawnEvent event) {
 
