@@ -126,6 +126,83 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         };
     }
 
+    private boolean isDoors(Material type) {
+        return switch (type) {
+            case OAK_DOOR, 
+                 IRON_DOOR, 
+                 SPRUCE_DOOR, 
+                 BIRCH_DOOR, 
+                 JUNGLE_DOOR, 
+                 ACACIA_DOOR, 
+                 DARK_OAK_DOOR, 
+                 MANGROVE_DOOR, 
+                 CHERRY_DOOR, 
+                 PALE_OAK_DOOR, 
+                 CRIMSON_DOOR -> true;
+    
+            default -> false;
+        };
+    }
+
+    private boolean isFenceGates(Material type) {
+        return switch (type) {
+            case OAK_FENCE_GATE, 
+                 SPRUCE, 
+                 BIRCH_FENCE_GATE, 
+                 JUNGLE_FENCE_GATE, 
+                 ACACIA_FENCE_GATE, 
+                 DARK_OAK_FENCE_GATE, 
+                 MANGROVE_FENCE_GATE, 
+                 CHERRY_FENCE_GATE, 
+                 PALE_OAK_FENCE_GATE, 
+                 BAMBOO_FENCE_GATE, 
+                 CRIMSON_FENCE_GATE, 
+                 WARPED_FENCE_GATE -> true;
+    
+            default -> false;
+        };
+    }
+
+    private boolean isTrapdoors(Material type) {
+        return switch (type) {
+            case OAK TRAPDOOR, 
+                 IRON_TRAPDOOR, 
+                 SPRUCE_TRAPDOOR, 
+                 BIRCH_TRAPDOOR, 
+                 JUNGLE_TRAPDOOR,
+                 ACACIA_TRAPDOOR, 
+                 DARK_OAK_TRAPDOOR, 
+                 MANGROVE_TRAPDOOR, 
+                 CHERRY_TRAPDOOR, 
+                 PALE_OAK_TRAPDOOR, 
+                 BAMBOO_TRAPDOOR, 
+                 CRIMSON_TRAPDOOR, 
+                 WARPED_TRAPDOOR -> true;
+    
+            default -> false;
+        };
+    }
+
+    private boolean isButtons(Material type) {
+        return switch (type) {
+            case OAK_BUTTON, 
+                 STONE_BUTTON, 
+                 SPRUCE_BUTTON, 
+                 BIRCH_BUTTON, 
+                 JUNGLE_BUTTON, 
+                 ACACIA_BUTTON, 
+                 DARK_OAK_BUTTON, 
+                 MANGROVE_BUTTON, 
+                 CHERRY_BUTTON, 
+                 PALE_OAK_BUTTON, 
+                 BAMBOK_BUTTON, 
+                 CRIMSON_BUTTON, 
+                 WARPED_BUTTON -> true;
+    
+            default -> false;
+        };
+    }
+
     
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -195,6 +272,26 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
         if (!getConfig().getBoolean("features.redstone-lamps")
                 && isRedstoneLamp(event.getBlock().getType())) {
+            event.setNewCurrent(0);
+        }
+
+        if (!getConfig().getBoolean("features.doors")
+                && isDoors(event.getBlock().getType())) {
+            event.setNewCurrent(0);
+        }
+
+        if (!getConfig().getBoolean("features.fence-gates")
+                && isFenceGates(event.getBlock().getType())) {
+            event.setNewCurrent(0);
+        }
+
+        if (!getConfig().getBoolean("features.trapdoors")
+                && isTrapdoors(event.getBlock().getType())) {
+            event.setNewCurrent(0);
+        }
+
+        if (!getConfig().getBoolean("features.buttons")
+                && isButtons(event.getBlock().getType())) {
             event.setNewCurrent(0);
         }
    
