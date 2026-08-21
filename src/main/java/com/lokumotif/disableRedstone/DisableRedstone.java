@@ -147,7 +147,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     private boolean isFenceGates(Material type) {
         return switch (type) {
             case OAK_FENCE_GATE,
-                 SPRUCE,
+                 SPRUCE_FENCE_GATE,
                  BIRCH_FENCE_GATE,
                  JUNGLE_FENCE_GATE,
                  ACACIA_FENCE_GATE,
@@ -165,7 +165,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
     private boolean isTrapdoors(Material type) {
         return switch (type) {
-            case OAK TRAPDOOR,
+            case OAK_TRAPDOOR,
                  IRON_TRAPDOOR,
                  SPRUCE_TRAPDOOR,
                  BIRCH_TRAPDOOR,
@@ -195,7 +195,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
                  MANGROVE_BUTTON,
                  CHERRY_BUTTON,
                  PALE_OAK_BUTTON,
-                 BAMBOK_BUTTON,
+                 BAMBOO_BUTTON,
                  CRIMSON_BUTTON,
                  WARPED_BUTTON -> true;
     
