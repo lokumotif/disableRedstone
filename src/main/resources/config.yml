@@ -14,3 +14,7 @@ features:
   tnt-priming: true
   explosions: true
   redstone-lamps: true
+  fence_gates: true
+  buttons: true
+  trapdoors: true
+  doors: true
