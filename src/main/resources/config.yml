@@ -7,7 +7,6 @@ disabled-blocks:
 
 features:
   redstone: true
-  redstone-signals: true
   pistons: true
   dispensers: true
   hoppers: true
