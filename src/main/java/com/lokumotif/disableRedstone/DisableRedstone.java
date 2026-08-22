@@ -90,7 +90,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
                  HOPPER,
                  NOTE_BLOCK,
                  CRAFTER,
-                 JUKEBOX,
                  TRAPPED_CHEST -> true;
 
             default -> false;
@@ -108,6 +107,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
                  TNT,
                  END_CRYSTAL,
                  RESPAWN_ANCHOR,
+                 JUKEBOX
                  BARREL -> true;
     
             default -> false;
@@ -444,18 +444,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     
         if (getConfig().getBoolean("features.redstone")
                 && isRedstoneComponent(block.getType())) {
-            event.setCancelled(true);
-        }
-    }
-    
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
-    public void onTntPrime(EntitySpawnEvent event) {
-
-        if (getConfig().getBoolean("features.tnt-priming")) {
-            return;
-        }
-
-        if (event.getEntityType() == EntityType.TNT) {
             event.setCancelled(true);
         }
     }
