@@ -267,7 +267,13 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onRedstone(BlockRedstoneEvent event) {
 
-        // If jukebox is disabled, block redstone from jukeboxes
+        // If global redstone feature is disabled, always prevent jukebox from producing current
+        if (!getConfig().getBoolean("features.redstone") && event.getBlock().getType() == Material.JUKEBOX) {
+            event.setNewCurrent(0);
+            return;
+        }
+
+        // If jukebox feature is disabled, block redstone from jukeboxes
         if (!getConfig().getBoolean("features.jukebox")
                 && event.getBlock().getType() == Material.JUKEBOX) {
             event.setNewCurrent(0);
@@ -348,10 +354,14 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
             return;
         }
     
-        if (event.getClickedBlock() != null &&
-            disabledBlocks.contains(event.getClickedBlock().getType())) {
-    
-            event.setCancelled(true);
+        if (event.getClickedBlock() != null) {
+            Material clicked = event.getClickedBlock().getType();
+            // If jukebox feature is disabled, allow the jukebox-specific handler to decide (so inserting/ejecting discs still works)
+            if (clicked == Material.JUKEBOX && !getConfig().getBoolean("features.jukebox")) {
+                // do nothing here; onJukeboxInteract will handle allowed interactions
+            } else if (disabledBlocks.contains(clicked)) {
+                event.setCancelled(true);
+            }
         }
     }
 
@@ -432,7 +442,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
                 event.setCancelled(true);
             }
         }
-    } 
+    }
 
     // Hopper item pickup
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
@@ -489,7 +499,8 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         boolean emptyHand = inHand == null || inHand.getType() == Material.AIR;
     
         if (holdingMusicDisc || emptyHand) {
-            // allow inserting or ejecting -> do not cancel
+            // allow inserting or ejecting -> ensure the event is not cancelled
+            event.setCancelled(false);
             return;
         }
     
