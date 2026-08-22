@@ -12,6 +12,7 @@ import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.block.BlockPhysicsEvent
 import org.bukkit.event.block.TNTPrimeEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
@@ -267,12 +268,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         if (!getConfig().getBoolean("features.redstone")
                 && (event.getBlock().getType() == Material.REPEATER
                 || event.getBlock().getType() == Material.COMPARATOR
-                || event.getBlock().getType() == Material.COPPER_BULB)) {
-            event.setNewCurrent(0);
-        }
-
-        if (!getConfig().getBoolean("features.redstone-lamps")
-                && isRedstoneLamp(event.getBlock().getType())) {
             event.setNewCurrent(0);
         }
 
@@ -343,6 +338,18 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
                 event.setCancelled(true);
             }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
+    public void onBlockPhysics(BlockPhysicsEvent event) {
+
+        if (!getConfig().getBoolean("features.redstone-lamps")) {
+            return;
+        }
+    
+        if (isRedstoneLamp(event.getBlock().getType())) {
+            event.setCancelled(true);
         }
     }
 
