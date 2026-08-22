@@ -265,7 +265,11 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     // Redstone blocking
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onRedstone(BlockRedstoneEvent event) {
-
+    
+        if (!getConfig().getBoolean("features.redstone")) {
+            event.setNewCurrent(0);
+        }
+        
         if (!getConfig().getBoolean("features.doors")
                 && isDoors(event.getBlock().getType())) {
             event.setNewCurrent(0);
@@ -289,11 +293,19 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
-    public void onRedstone(BlockPhysicsEvent event) {
-        if (!getConfig().getBoolean("features.redstone")) {
+    public void onRedstonePhysics(BlockPhysicsEvent event) {
+    
+        if (getConfig().getBoolean("features.redstone")) {
+            return;
+        }
+    
+        Block block = event.getBlock();
+    
+        if (block.getType() == Material.REDSTONE_BLOCK) {
             event.setCancelled(true);
         }
     }
+
     
     // Piston check
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
