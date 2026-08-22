@@ -368,7 +368,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
             Block sourceBlock = event.getSourceBlock();
             
             // Block redstone lamp state change if source is jukebox or any redstone component
-            if (sourceBlock != null && (sourceBlock.getType() == Material.JUKEBOX || isRedstoneComponent(sourceBlock.getType()))) {
+            if (sourceBlock != null && sourceBlock.getType() == Material.JUKEBOX) {
                 event.setCancelled(true);
             }
         }
