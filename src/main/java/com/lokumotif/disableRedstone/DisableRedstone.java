@@ -108,6 +108,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
                  COMPARATOR,
                  END_CRYSTAL,
                  RESPAWN_ANCHOR,
+                 JUKEBOX,
                  BARREL -> true;
     
             default -> false;
