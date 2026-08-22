@@ -85,7 +85,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
                  CALIBRATED_SCULK_SENSOR,
                  PISTON,
                  STICKY_PISTON,
-                 JUKEBOX,
                  DISPENSER,
                  DROPPER,
                  HOPPER,
@@ -305,6 +304,11 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         if (block.getType() == Material.REDSTONE_BLOCK) {
             event.setCancelled(true);
         }
+
+        if (!getConfig().getBoolean("features.jukebox")
+                && block.getType() == Material.JUKEBOX) {
+            event.setCancelled(true);
+        }
     }
 
     
@@ -363,15 +367,9 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
             return;
         }
         
-        Block block = event.getBlock();  // Add this line
+        Block block = event.getBlock();
         if (isRedstoneLamp(block.getType())) {
-            // Get the source block that changed
-            Block sourceBlock = event.getSourceBlock();
-                
-            // Block redstone lamp state change if source is jukebox or any redstone component
-            if (sourceBlock != null && sourceBlock.getType() == Material.JUKEBOX) {
-                event.setCancelled(true);
-            }
+            event.setCancelled(true);
         }
     }
 
@@ -454,5 +452,25 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
                 && isRedstoneComponent(block.getType())) {
             event.setCancelled(true);
         }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
+    public void onJukeboxInteract(PlayerInteractEvent event) {
+    
+        if (getConfig().getBoolean("features.jukebox")) {
+            return;
+        }
+    
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) {
+            return;
+        }
+    
+        Block block = event.getClickedBlock();
+    
+        if (block == null || block.getType() != Material.JUKEBOX) {
+            return;
+        }
+    
+        event.setCancelled(true);
     }
 }
