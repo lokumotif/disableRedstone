@@ -5,6 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.Lightable;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
@@ -296,13 +297,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onRedstonePhysics(BlockPhysicsEvent event) {
     
-        if (!getConfig().getBoolean("features.redstone-lamps")) {
-            if (isRedstoneLamp(event.getBlock().getType())) {
-                event.setCancelled(true);
-                return;
-            }
-        }
-    
         if (getConfig().getBoolean("features.redstone")) {
             return;
         }
@@ -345,25 +339,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
                 event.setCancelled(true);
             }
-        }
-    }
-
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
-    public void onBlockPhysics(BlockPhysicsEvent event) {
-
-        if (!getConfig().getBoolean("features.jukebox")) {
-            if (event.getBlock().getType() == Material.JUKEBOX) {
-                event.setCancelled(true);
-            }
-        }
-        
-        if (getConfig().getBoolean("features.redstone-lamps")) {
-            return;
-        }
-        
-        Block block = event.getBlock();
-        if (isRedstoneLamp(block.getType())) {
-            event.setCancelled(true);
         }
     }
 
@@ -445,6 +420,57 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         if (getConfig().getBoolean("features.redstone")
                 && isRedstoneComponent(block.getType())) {
             event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
+    public void onJukeboxInteract(PlayerInteractEvent event) {
+    
+        if (getConfig().getBoolean("features.jukebox")) {
+            return;
+        }
+    
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) {
+            return;
+        }
+    
+        Block block = event.getClickedBlock();
+    
+        if (block != null && block.getType() == Material.JUKEBOX) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
+    public void onJukeboxRedstone(BlockRedstoneEvent event) {
+    
+        if (getConfig().getBoolean("features.redstone")) {
+            return;
+        }
+    
+        if (event.getBlock().getType() == Material.JUKEBOX) {
+            event.setNewCurrent(0);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
+    public void onLampPhysics(BlockPhysicsEvent event) {
+    
+        if (getConfig().getBoolean("features.redstone-lamp")) {
+            return;
+        }
+    
+        Block block = event.getBlock();
+    
+        if (!isRedstoneLamp(block.getType())) {
+            return;
+        }
+    
+        if (block.getBlockData() instanceof Lightable lightable) {
+            if (lightable.isLit()) {
+                lightable.setLit(false);
+                block.setBlockData(lightable, false);
+            }
         }
     }
 }
