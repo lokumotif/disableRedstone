@@ -85,6 +85,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
                  CALIBRATED_SCULK_SENSOR,
                  PISTON,
                  STICKY_PISTON,
+                 JUKEBOX,
                  DISPENSER,
                  DROPPER,
                  HOPPER,
@@ -106,7 +107,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
                  COMPARATOR,
                  END_CRYSTAL,
                  RESPAWN_ANCHOR,
-                 JUKEBOX,
                  BARREL -> true;
     
             default -> false;
@@ -363,8 +363,14 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
             return;
         }
     
-        if (isRedstoneLamp(event.getBlock().getType())) {
-            event.setCancelled(true);
+        if (isRedstoneLamp(block.getType())) {
+            // Get the source block that changed
+            Block sourceBlock = event.getSourceBlock();
+            
+            // Block redstone lamp state change if source is jukebox or any redstone component
+            if (sourceBlock != null && (sourceBlock.getType() == Material.JUKEBOX || isRedstoneComponent(sourceBlock.getType()))) {
+                event.setCancelled(true);
+            }
         }
     }
 
@@ -396,7 +402,8 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         }
         
     if (!getConfig().getBoolean("features.redstone")) {
-        event.setCancelled(true);
+        if (event.getCause() == TNTPrimeEvent.PrimeCause.REDSTONE) {
+            event.setCancelled(true);
         }
     }
     
