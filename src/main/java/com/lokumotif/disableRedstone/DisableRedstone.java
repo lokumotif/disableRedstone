@@ -393,6 +393,10 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     if (!getConfig().getBoolean("features.tnt-priming")) {
         event.setCancelled(true);
         }
+        
+    if (!getConfig().getBoolean("features.redstone")) {
+        event.setCancelled(true);
+        }
     }
     
 
