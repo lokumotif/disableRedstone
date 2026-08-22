@@ -104,7 +104,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
                  DROPPER,
                  REPEATER,
                  COMPARATOR,
-                 TNT,
                  END_CRYSTAL,
                  RESPAWN_ANCHOR,
                  JUKEBOX,
@@ -392,7 +391,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onTntPrime(TNTPrimeEvent event) {
 
-    if (!getConfig().getBoolean("features.tnt-priming")) {
+    if (!getConfig().getBoolean("features.tnt")) {
         event.setCancelled(true);
         }
         
