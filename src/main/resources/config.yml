@@ -11,7 +11,7 @@ features:
   pistons: true
   dispensers: true
   hoppers: true
-  tnt-priming: true
+  tnt: true
   explosions: true
   redstone-lamps: true
   fence_gates: true
