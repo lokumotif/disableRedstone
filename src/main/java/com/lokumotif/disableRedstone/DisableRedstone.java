@@ -12,7 +12,7 @@ import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
-import org.bukkit.event.block.BlockPhysicsEvent
+import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.TNTPrimeEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
