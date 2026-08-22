@@ -296,6 +296,12 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onRedstonePhysics(BlockPhysicsEvent event) {
     
+        if (!getConfig().getBoolean("features.jukebox")
+                && event.getBlock().getType() == Material.JUKEBOX) {
+            event.setCancelled(true);
+            return;
+        }
+    
         if (getConfig().getBoolean("features.redstone")) {
             return;
         }
@@ -303,11 +309,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         Block block = event.getBlock();
     
         if (block.getType() == Material.REDSTONE_BLOCK) {
-            event.setCancelled(true);
-        }
-
-        if (!getConfig().getBoolean("features.jukebox")
-                && block.getType() == Material.JUKEBOX) {
             event.setCancelled(true);
         }
     }
