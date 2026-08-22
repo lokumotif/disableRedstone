@@ -70,7 +70,8 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     
     private boolean isRedstoneComponent(Material type) {
         return switch (type) {
-            case REDSTONE_WIRE,
+            case REDSTONE_BLOCK,
+                 REDSTONE_WIRE,
                  REDSTONE_TORCH,
                  REDSTONE_WALL_TORCH,
                  REPEATER,
@@ -88,7 +89,8 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
                  DROPPER,
                  HOPPER,
                  NOTE_BLOCK,
-                 CRAFTER -> true;
+                 CRAFTER,
+                 TRAPPED_CHEST -> true;
 
             default -> false;
         };
@@ -265,8 +267,8 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     public void onRedstone(BlockRedstoneEvent event) {
     
         if (!getConfig().getBoolean("features.redstone")
-                && (event.getBlock().getType())) {
-            event.setCancelled(true);
+                && isRedstoneComponent(event.getBlock().getType())) {
+            event.setNewCurrent(0);
         }
 
         if (!getConfig().getBoolean("features.doors")
