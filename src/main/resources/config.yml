@@ -14,7 +14,7 @@ features:
   explosions: true
   jukebox: true
   redstone-lamps: true
-  fence_gates: true
+  fence-gates: true
   buttons: true
   trapdoors: true
   doors: true
