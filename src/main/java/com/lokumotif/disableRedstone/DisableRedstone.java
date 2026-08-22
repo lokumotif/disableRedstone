@@ -5,7 +5,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.block.Block;
-import org.bukkit.entity.EntityType;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
@@ -15,7 +14,6 @@ import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.TNTPrimeEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
@@ -267,19 +265,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     // Redstone blocking
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onRedstone(BlockRedstoneEvent event) {
-
-        // If global redstone feature is disabled, always prevent jukebox from producing current
-        if (!getConfig().getBoolean("features.redstone") && event.getBlock().getType() == Material.JUKEBOX) {
-            event.setNewCurrent(0);
-            return;
-        }
-
-        // If jukebox feature is disabled, block redstone from jukeboxes
-        if (!getConfig().getBoolean("features.jukebox")
-                && event.getBlock().getType() == Material.JUKEBOX) {
-            event.setNewCurrent(0);
-            return;
-        }
         
         if (!getConfig().getBoolean("features.redstone")
                 && isRedstoneComponent(event.getBlock().getType())) {
@@ -347,25 +332,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         }
     }
 
-    // Block interact redstones
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
-    public void onInteract(PlayerInteractEvent event) {
-    
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) {
-            return;
-        }
-    
-        if (event.getClickedBlock() != null) {
-            Material clicked = event.getClickedBlock().getType();
-            // If jukebox feature is disabled, allow the jukebox-specific handler to decide (so inserting/ejecting discs still works)
-            if (clicked == Material.JUKEBOX && !getConfig().getBoolean("features.jukebox")) {
-                // do nothing here; onJukeboxInteract will handle allowed interactions
-            } else if (disabledBlocks.contains(clicked)) {
-                event.setCancelled(true);
-            }
-        }
-    }
-
     // Dispenser / Dropper
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onDispense(BlockDispenseEvent event) {
@@ -384,6 +350,12 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onBlockPhysics(BlockPhysicsEvent event) {
+
+        if (!getConfig().getBoolean("features.jukebox")) {
+            if (event.getBlock().getType() == Material.JUKEBOX) {
+                event.setCancelled(true);
+            }
+        }
         
         if (getConfig().getBoolean("features.redstone-lamps")) {
             return;
@@ -474,38 +446,5 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
                 && isRedstoneComponent(block.getType())) {
             event.setCancelled(true);
         }
-    }
-
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
-    public void onJukeboxInteract(PlayerInteractEvent event) {
-    
-        if (getConfig().getBoolean("features.jukebox")) {
-            return; // feature enabled -> normal behavior
-        }
-    
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) {
-            return;
-        }
-    
-        Block block = event.getClickedBlock();
-    
-        if (block == null || block.getType() != Material.JUKEBOX) {
-            return;
-        }
-    
-        // Allow inserting a disc (player holding a music disc)
-        // and allow ejecting (player right-clicking with empty hand).
-        ItemStack inHand = event.getItem(); // may be null or AIR when empty
-        boolean holdingMusicDisc = inHand != null && inHand.getType().name().contains("MUSIC_DISC");
-        boolean emptyHand = inHand == null || inHand.getType() == Material.AIR;
-    
-        if (holdingMusicDisc || emptyHand) {
-            // allow inserting or ejecting -> ensure the event is not cancelled
-            event.setCancelled(false);
-            return;
-        }
-    
-        // any other interaction with the jukebox is blocked
-        event.setCancelled(true);
     }
 }
