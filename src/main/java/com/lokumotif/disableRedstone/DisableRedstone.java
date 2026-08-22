@@ -358,15 +358,16 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onBlockPhysics(BlockPhysicsEvent event) {
-
+        
         if (getConfig().getBoolean("features.redstone-lamps")) {
             return;
         }
-    
+        
+        Block block = event.getBlock();  // Add this line
         if (isRedstoneLamp(block.getType())) {
             // Get the source block that changed
             Block sourceBlock = event.getSourceBlock();
-            
+                
             // Block redstone lamp state change if source is jukebox or any redstone component
             if (sourceBlock != null && sourceBlock.getType() == Material.JUKEBOX) {
                 event.setCancelled(true);
@@ -396,14 +397,15 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     // TNT interact block
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onTntPrime(TNTPrimeEvent event) {
-
-    if (!getConfig().getBoolean("features.tnt")) {
-        event.setCancelled(true);
+    
+        if (!getConfig().getBoolean("features.tnt")) {
+            event.setCancelled(true);
         }
         
-    if (!getConfig().getBoolean("features.redstone")) {
-        if (event.getCause() == TNTPrimeEvent.PrimeCause.REDSTONE) {
-            event.setCancelled(true);
+        if (!getConfig().getBoolean("features.redstone")) {
+            if (event.getCause() == TNTPrimeEvent.PrimeCause.REDSTONE) {
+                event.setCancelled(true);
+            }
         }
     }
     
@@ -411,24 +413,24 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     // Hopper item transfer
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onHopperMove(InventoryMoveItemEvent event) {
-
+    
         if (!getConfig().getBoolean("features.hoppers")) {
-
+    
             if (event.getSource().getType().name().contains("HOPPER") ||
                 event.getDestination().getType().name().contains("HOPPER") ||
                 event.getInitiator().getType().name().contains("HOPPER")) {
-
+    
                 event.setCancelled(true);
             }
         }
-    }
+    } 
 
     // Hopper item pickup
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onHopperPickup(InventoryPickupItemEvent event) {
-
+    
         if (!getConfig().getBoolean("features.hoppers")) {
-
+    
             if (event.getInventory().getType().name().contains("HOPPER")) {
                 event.setCancelled(true);
             }
