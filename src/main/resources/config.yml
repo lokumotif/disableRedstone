@@ -12,6 +12,7 @@ features:
   hoppers: true
   tnt: true
   explosions: true
+  jukebox: true
   redstone-lamps: true
   fence_gates: true
   buttons: true
