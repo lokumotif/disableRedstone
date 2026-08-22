@@ -296,12 +296,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onRedstonePhysics(BlockPhysicsEvent event) {
     
-        if (!getConfig().getBoolean("features.jukebox")
-                && event.getBlock().getType() == Material.JUKEBOX) {
-            event.setCancelled(true);
-            return;
-        }
-    
         if (!getConfig().getBoolean("features.redstone-lamps")) {
             if (isRedstoneLamp(event.getBlock().getType())) {
                 event.setCancelled(true);
@@ -467,7 +461,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     public void onJukeboxInteract(PlayerInteractEvent event) {
     
         if (getConfig().getBoolean("features.jukebox")) {
-            return;
+            return; // feature enabled -> normal behavior
         }
     
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) {
@@ -480,6 +474,18 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
             return;
         }
     
+        // Allow inserting a disc (player holding a music disc)
+        // and allow ejecting (player right-clicking with empty hand).
+        ItemStack inHand = event.getItem(); // may be null or AIR when empty
+        boolean holdingMusicDisc = inHand != null && inHand.getType().name().contains("MUSIC_DISC");
+        boolean emptyHand = inHand == null || inHand.getType() == Material.AIR;
+    
+        if (holdingMusicDisc || emptyHand) {
+            // allow inserting or ejecting -> do not cancel
+            return;
+        }
+    
+        // any other interaction with the jukebox is blocked
         event.setCancelled(true);
     }
 }
