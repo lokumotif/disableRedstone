@@ -269,11 +269,9 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
             return;
         }
     
-        if (event.getBlock().getType() == Material.JUKEBOX) {
-            return;
+        if (isRedstoneComponent(event.getBlock().getType())) {
+            event.setNewCurrent(0);
         }
-    
-        event.setNewCurrent(0);
     
         if (isRedstoneComponent(event.getBlock().getType())) {
             event.setNewCurrent(0);
