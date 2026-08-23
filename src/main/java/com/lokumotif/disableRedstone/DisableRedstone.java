@@ -264,7 +264,11 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     // Redstone blocking
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onRedstone(BlockRedstoneEvent event) {
-            
+
+        if (!getConfig().getBoolean("features.redstone")) {
+            event.setNewCurrent(0);
+        }
+        
         if (!getConfig().getBoolean("features.doors")
                 && isDoors(event.getBlock().getType())) {
             event.setNewCurrent(0);
@@ -284,24 +288,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
                 && isButtons(event.getBlock().getType())) {
             event.setNewCurrent(0);
         }
-        
-        if (getConfig().getBoolean("features.redstone")) {
-            return;
-        }
-    
-        Material type = event.getBlock().getType();
-    
-        // Lamp / Copper Bulb kendi ayarıyla kontrol edilir
-        if (isRedstoneLamp(type)) {
-            return;
-        }
-    
-        // Jukebox kendi ayarıyla kontrol edilir
-        if (type == Material.JUKEBOX) {
-            return;
-        }
-    
-        event.setNewCurrent(0);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
@@ -417,6 +403,10 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onRedstoneInteract(PlayerInteractEvent event) {
     
+        if (getConfig().getBoolean("features.redstone")) {
+            return;
+        }
+    
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) {
             return;
         }
@@ -427,8 +417,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
             return;
         }
     
-        if (!getConfig().getBoolean("features.redstone")
-                && isRedstoneComponent(block.getType())) {
+        if (isRedstoneComponent(block.getType())) {
             event.setCancelled(true);
         }
     }
