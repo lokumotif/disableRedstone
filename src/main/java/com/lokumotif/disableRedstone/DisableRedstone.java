@@ -436,7 +436,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onJukeboxInteract(PlayerInteractEvent event) {
     
-        if (getConfig().getBoolean("features.jukebox-interaction")) {
+        if (getConfig().getBoolean("features.jukebox-disc")) {
             return;
         }
     
