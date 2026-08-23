@@ -417,7 +417,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
             return;
         }
     
-        if (getConfig().getBoolean("features.redstone")
+        if (!getConfig().getBoolean("features.redstone")
                 && isRedstoneComponent(block.getType())) {
             event.setCancelled(true);
         }
@@ -426,7 +426,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onJukeboxInteract(PlayerInteractEvent event) {
     
-        if (getConfig().getBoolean("features.jukebox")) {
+        if (!getConfig().getBoolean("features.jukebox")) {
             return;
         }
     
