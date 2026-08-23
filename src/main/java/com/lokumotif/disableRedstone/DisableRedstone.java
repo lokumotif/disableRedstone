@@ -21,7 +21,6 @@ import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -434,7 +433,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         return;
     }
 
-    if (block.getType() == Material.JUKEBOX) {
+    if (block.getType() != Material.JUKEBOX) {
         return;
     }
 
@@ -442,10 +441,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
             && isRedstoneComponent(block.getType())) {
         event.setCancelled(true);
     }
-    }
-
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
-    public void onJukeboxRedstone(BlockRedstoneEvent event) {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
