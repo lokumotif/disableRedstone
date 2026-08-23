@@ -264,10 +264,19 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     // Redstone blocking
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onRedstone(BlockRedstoneEvent event) {
-
-        if (!getConfig().getBoolean("features.redstone")) {
-                && isRedstoneComponent(event.getBlock().getType())) {
-            event.setNewCurrent(0);
+        
+        if (getConfig().getBoolean("features.redstone")) {
+            return;
+        }
+    
+        if (event.getBlock().getType() == Material.JUKEBOX) {
+            return;
+        }
+    
+        event.setNewCurrent(0);
+    
+        if (isRedstoneComponent(block.getType())) {
+            event.setCancelled(true);
         }
         
         if (!getConfig().getBoolean("features.doors")
@@ -441,9 +450,9 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
-    public void onJukeboxRedstone(BlockRedstoneEvent event) {
-    
+@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
+public void onJukeboxRedstone(BlockRedstoneEvent event) {
+
         if (getConfig().getBoolean("features.jukebox-redstone")) {
             return;
         }
