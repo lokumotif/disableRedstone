@@ -90,7 +90,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
                  HOPPER,
                  NOTE_BLOCK,
                  CRAFTER,
-                 JUKEBOX,
                  TRAPPED_CHEST -> true;
 
             default -> false;
