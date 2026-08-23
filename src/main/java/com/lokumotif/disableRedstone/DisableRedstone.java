@@ -434,7 +434,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         return;
     }
 
-    // Allow jukebox interaction if enabled, even if redstone is disabled
     if (block.getType() == Material.JUKEBOX) {
         return;
     }
@@ -442,6 +441,11 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     if (!getConfig().getBoolean("features.redstone")
             && isRedstoneComponent(block.getType())) {
         event.setCancelled(true);
+    }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
+    public void onJukeboxRedstone(BlockRedstoneEvent event) {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
