@@ -460,7 +460,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     
         Block block = event.getBlock();
     
-        if (!isRedstoneLamp(block.getType())) {
+        if (isRedstoneLamp(block.getType())) {
             return;
         }
     
