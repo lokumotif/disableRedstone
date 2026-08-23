@@ -423,24 +423,24 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onJukeboxInteract(PlayerInteractEvent event) {
         
-    if (event.getAction() != Action.RIGHT_CLICK_BLOCK) {
-        return;
-    }
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) {
+            return;
+        }
+        
+        Block block = event.getClickedBlock();
+        
+        if (block == null) {
+            return;
+        }
     
-    Block block = event.getClickedBlock();
+        if (block.getType() != Material.JUKEBOX) {
+            return;
+        }
     
-    if (block == null) {
-        return;
-    }
-
-    if (block.getType() != Material.JUKEBOX) {
-        return;
-    }
-
-    if (!getConfig().getBoolean("features.redstone")
-            && isRedstoneComponent(block.getType())) {
-        event.setCancelled(true);
-    }
+        if (!getConfig().getBoolean("features.jukebox")
+                && isRedstoneComponent(block.getType())) {
+            event.setCancelled(true);
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
