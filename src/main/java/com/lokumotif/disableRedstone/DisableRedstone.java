@@ -267,11 +267,24 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onRedstone(BlockRedstoneEvent event) {
         
-        if (!getConfig().getBoolean("features.redstone")
-                && isRedstoneComponent(event.getBlock().getType())) {
-            event.setNewCurrent(0);
+        if (getConfig().getBoolean("features.redstone")) {
+            return;
         }
-        
+    
+        Material type = event.getBlock().getType();
+    
+        // Redstone Lamp ve Copper Bulb kendi ayarından kontrol edilir
+        if (isRedstoneLamp(type)) {
+            return;
+        }
+    
+        // Jukebox kendi ayarından kontrol edilir
+        if (type == Material.JUKEBOX) {
+            return;
+        }
+    
+        event.setNewCurrent(0);
+            
         if (!getConfig().getBoolean("features.doors")
                 && isDoors(event.getBlock().getType())) {
             event.setNewCurrent(0);
