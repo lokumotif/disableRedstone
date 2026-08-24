@@ -66,6 +66,109 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
             getLogger().warning("config.yml was missing and has been recreated!");
         }
     }
+
+    private boolean isAllRestones(Material type) {
+        return switch (type) {
+            case REDSTONE_BLOCK,
+                 REDSTONE_WIRE,
+                 REDSTONE_TORCH,
+                 REDSTONE_WALL_TORCH,
+                 LEVER
+                 REPEATER,
+                 COMPARATOR,
+                 OBSERVER,
+                 POWERED_RAIL,
+                 DETECTOR_RAIL,
+                 ACTIVATOR_RAIL,
+                 TARGET,
+                 SCULK_SENSOR,
+                 CALIBRATED_SCULK_SENSOR,
+                 PISTON,
+                 STICKY_PISTON,
+                 DISPENSER,
+                 DROPPER,
+                 HOPPER,
+                 NOTE_BLOCK,
+                 CRAFTER,
+                 JUKEBOX,
+                 TRAPPED_CHEST,
+                 REDSTONE_LAMP,
+                 COPPER_BULB,
+                 EXPOSED_COPPER_BULB,
+                 WEATHERED_COPPER_BULB,
+                 OXIDIZED_COPPER_BULB,
+                 WAXED_COPPER_BULB,
+                 WAXED_EXPOSED_COPPER_BULB,
+                 WAXED_WEATHERED_COPPER_BULB,
+                 WAXED_OXIDIZED_COPPER_BULB,
+                 OAK_DOOR,
+                 IRON_DOOR,
+                 SPRUCE_DOOR,
+                 BIRCH_DOOR,
+                 JUNGLE_DOOR,
+                 ACACIA_DOOR,
+                 DARK_OAK_DOOR,
+                 MANGROVE_DOOR,
+                 CHERRY_DOOR,
+                 PALE_OAK_DOOR,
+                 CRIMSON_DOOR,
+                 OAK_FENCE_GATE,
+                 SPRUCE_FENCE_GATE,
+                 BIRCH_FENCE_GATE,
+                 JUNGLE_FENCE_GATE,
+                 ACACIA_FENCE_GATE,
+                 DARK_OAK_FENCE_GATE,
+                 MANGROVE_FENCE_GATE,
+                 CHERRY_FENCE_GATE,
+                 PALE_OAK_FENCE_GATE,
+                 BAMBOO_FENCE_GATE,
+                 CRIMSON_FENCE_GATE,
+                 WARPED_FENCE_GATE,
+                 OAK_TRAPDOOR,
+                 IRON_TRAPDOOR,
+                 SPRUCE_TRAPDOOR,
+                 BIRCH_TRAPDOOR,
+                 JUNGLE_TRAPDOOR,
+                 ACACIA_TRAPDOOR,
+                 DARK_OAK_TRAPDOOR,
+                 MANGROVE_TRAPDOOR,
+                 CHERRY_TRAPDOOR,
+                 PALE_OAK_TRAPDOOR,
+                 BAMBOO_TRAPDOOR,
+                 CRIMSON_TRAPDOOR,
+                 WARPED_TRAPDOOR,
+                 OAK_BUTTON,
+                 STONE_BUTTON,
+                 SPRUCE_BUTTON,
+                 BIRCH_BUTTON,
+                 JUNGLE_BUTTON,
+                 ACACIA_BUTTON,
+                 DARK_OAK_BUTTON,
+                 MANGROVE_BUTTON,
+                 CHERRY_BUTTON,
+                 PALE_OAK_BUTTON,
+                 BAMBOO_BUTTON,
+                 CRIMSON_BUTTON,
+                 WARPED_BUTTON,
+                 STONE_PRESSURE_PLATE,
+                 OAK_PRESSURE_PLATE,
+                 SPRUCE_PRESSURE_PLATE,
+                 BIRCH_PRESSURE_PLATE,
+                 JUNGLE_PRESSURE_PLATE,
+                 ACACIA_PRESSURE_PLATE,
+                 DARK_OAK_PRESSURE_PLATE,
+                 MANGROVE_PRESSURE_PLATE,
+                 CHERRY_PRESSURE_PLATE,
+                 BAMBOO_PRESSURE_PLATE,
+                 CRIMSON_PRESSURE_PLATE,
+                 WARPED_PRESSURE_PLATE,
+                 POLISHED_BLACKSTONE_PRESSURE_PLATE,
+                 LIGHT_WEIGHTED_PRESSURE_PLATE,
+                 HEAVY_WEIGHTED_PRESSURE_PLATE -> true;
+
+            default -> false;
+        };
+    }
     
     private boolean isRedstoneComponent(Material type) {
         return switch (type) {
@@ -105,8 +208,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
                  COMPARATOR,
                  END_CRYSTAL,
                  RESPAWN_ANCHOR,
-                 JUKEBOX,
-                 BARREL -> true;
+                 JUKEBOX -> true;
     
             default -> false;
         };
@@ -226,6 +328,25 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
             default -> false;
         };
     }
+
+    private boolean isRails(Material type) {
+        return switch (type) {
+            case POWERED_RAIL,
+                 DETECTOR_RAIL,
+                 ACTIVATOR_RAIL -> true;
+    
+            default -> false;
+        };
+    }
+
+    private boolean isLever(Material type) {
+        return switch (type) {
+            case LEVER -> true;
+    
+            default -> false;
+        };
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         
@@ -281,6 +402,15 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         }
     }
 
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
+    public void onRedstone(BlockRedstoneEvent event) {
+
+        if (!getConfig().getBoolean("features.fence-gates")
+                && isFenceGates(event.getBlock().getType())) {
+            event.setNewCurrent(0);
+        }
+    
     // Redstone blocking
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onRedstone(BlockRedstoneEvent event) {
@@ -309,6 +439,11 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         }
 
         if (!getConfig().getBoolean("features.buttons")
+                && isButtons(event.getBlock().getType())) {
+            event.setNewCurrent(0);
+        }
+
+        if (!getConfig().getBoolean("features.lever")
                 && isButtons(event.getBlock().getType())) {
             event.setNewCurrent(0);
         }
@@ -509,5 +644,29 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         if (isPressurePlate(block.getType())) {
             event.setCancelled(true);
         }
-    }    
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
+    public void onPressurePlateRedstone(BlockRedstoneEvent event) {
+    
+        if (getConfig().getBoolean("features.pressure-plates")) {
+            return;
+        }
+    
+        if (isPressurePlate(event.getBlock().getType())) {
+            event.setNewCurrent(0);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
+    public void onRails(BlockRedstoneEvent event) {
+    
+        if (getConfig().getBoolean("features.rails")) {
+            return;
+        }
+    
+        if (isRails(event.getBlock().getType())) {
+            event.setNewCurrent(0);
+        }
+    }
 }
