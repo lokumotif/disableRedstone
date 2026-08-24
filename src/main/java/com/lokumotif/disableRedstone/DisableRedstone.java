@@ -204,8 +204,28 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
             default -> false;
         };
     }
-
     
+    private boolean isPressurePlate(Material type) {
+        return switch (type) {
+            case STONE_PRESSURE_PLATE,
+                 OAK_PRESSURE_PLATE,
+                 SPRUCE_PRESSURE_PLATE,
+                 BIRCH_PRESSURE_PLATE,
+                 JUNGLE_PRESSURE_PLATE,
+                 ACACIA_PRESSURE_PLATE,
+                 DARK_OAK_PRESSURE_PLATE,
+                 MANGROVE_PRESSURE_PLATE,
+                 CHERRY_PRESSURE_PLATE,
+                 BAMBOO_PRESSURE_PLATE,
+                 CRIMSON_PRESSURE_PLATE,
+                 WARPED_PRESSURE_PLATE,
+                 POLISHED_BLACKSTONE_PRESSURE_PLATE,
+                 LIGHT_WEIGHTED_PRESSURE_PLATE,
+                 HEAVY_WEIGHTED_PRESSURE_PLATE -> true;
+    
+            default -> false;
+        };
+    }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         
@@ -476,4 +496,18 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
             }
         }
     }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
+    public void onPressurePlatePhysics(BlockPhysicsEvent event) {
+    
+        if (getConfig().getBoolean("features.pressure-plates")) {
+            return;
+        }
+    
+        Block block = event.getBlock();
+    
+        if (isPressurePlate(block.getType())) {
+            event.setCancelled(true);
+        }
+    }    
 }
