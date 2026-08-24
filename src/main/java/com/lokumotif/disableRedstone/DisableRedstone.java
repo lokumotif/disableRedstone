@@ -402,10 +402,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         }
     }
 
-
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
-    public void onRedstone(BlockRedstoneEvent event) {
-    
     // Redstone blocking
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onRedstone(BlockRedstoneEvent event) {
