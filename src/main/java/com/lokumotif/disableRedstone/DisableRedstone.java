@@ -410,6 +410,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
                 && isFenceGates(event.getBlock().getType())) {
             event.setNewCurrent(0);
         }
+    }
     
     // Redstone blocking
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
