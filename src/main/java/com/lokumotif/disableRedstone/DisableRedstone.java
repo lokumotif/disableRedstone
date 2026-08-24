@@ -73,7 +73,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
                  REDSTONE_WIRE,
                  REDSTONE_TORCH,
                  REDSTONE_WALL_TORCH,
-                 LEVER
+                 LEVER,
                  REPEATER,
                  COMPARATOR,
                  OBSERVER,
