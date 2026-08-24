@@ -19,3 +19,4 @@ features:
   buttons: true
   trapdoors: true
   doors: true
+  pressure-plates: true
