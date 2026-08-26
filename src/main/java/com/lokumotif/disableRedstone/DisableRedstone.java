@@ -408,6 +408,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
         if (!getConfig().getBoolean("features.all-redstone")) {
             event.setNewCurrent(0);
+            return;
         }
         
         if (getConfig().getBoolean("features.redstone")) {
@@ -449,6 +450,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
         if (!getConfig().getBoolean("features.all-redstone")) {
             event.setNewCurrent(0);
+            return;
         }
         
         if (getConfig().getBoolean("features.redstone")) {
@@ -469,6 +471,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
         if (!getConfig().getBoolean("features.all-redstone")) {
             event.setNewCurrent(0);
+            return;
         }
         
         if (!getConfig().getBoolean("features.pistons")) {
@@ -481,6 +484,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
         if (!getConfig().getBoolean("features.all-redstone")) {
             event.setNewCurrent(0);
+            return;
         }
         
         if (!getConfig().getBoolean("features.pistons")) {
@@ -494,6 +498,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
         if (!getConfig().getBoolean("features.all-redstone")) {
             event.setNewCurrent(0);
+            return;
         }
         
         if (!getConfig().getBoolean("features.dispensers")) {
@@ -575,6 +580,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
         if (!getConfig().getBoolean("features.all-redstone")) {
             event.setNewCurrent(0);
+            return;
         }
     
         if (getConfig().getBoolean("features.redstone")) {
@@ -601,6 +607,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
         if (!getConfig().getBoolean("features.all-redstone")) {
             event.setNewCurrent(0);
+            return;
         }
         
         if (getConfig().getBoolean("features.jukebox-redstone")) {
@@ -656,6 +663,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
         if (!getConfig().getBoolean("features.all-redstone")) {
             event.setNewCurrent(0);
+            return;
         }
         
         if (getConfig().getBoolean("features.pressure-plates")) {
@@ -674,6 +682,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
         if (!getConfig().getBoolean("features.all-redstone")) {
             event.setNewCurrent(0);
+            return;
         }
         
         if (getConfig().getBoolean("features.pressure-plates")) {
@@ -690,6 +699,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
         if (!getConfig().getBoolean("features.all-redstone")) {
             event.setNewCurrent(0);
+            return;
         }
 
         if (getConfig().getBoolean("features.rails")) {
