@@ -446,7 +446,11 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onRedstonePhysics(BlockPhysicsEvent event) {
-    
+
+        if (!getConfig().getBoolean("features.all-redstone")) {
+            event.setNewCurrent(0);
+        }
+        
         if (getConfig().getBoolean("features.redstone")) {
             return;
         }
@@ -463,6 +467,10 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onPistonExtend(BlockPistonExtendEvent event) {
 
+        if (!getConfig().getBoolean("features.all-redstone")) {
+            event.setNewCurrent(0);
+        }
+        
         if (!getConfig().getBoolean("features.pistons")) {
             event.setCancelled(true);
         }
@@ -471,6 +479,10 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onPistonRetract(BlockPistonRetractEvent event) {
 
+        if (!getConfig().getBoolean("features.all-redstone")) {
+            event.setNewCurrent(0);
+        }
+        
         if (!getConfig().getBoolean("features.pistons")) {
             event.setCancelled(true);
         }
@@ -480,6 +492,10 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onDispense(BlockDispenseEvent event) {
 
+        if (!getConfig().getBoolean("features.all-redstone")) {
+            event.setNewCurrent(0);
+        }
+        
         if (!getConfig().getBoolean("features.dispensers")) {
 
             Material type = event.getBlock().getType();
@@ -556,6 +572,10 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onRedstoneInteract(PlayerInteractEvent event) {
+
+        if (!getConfig().getBoolean("features.all-redstone")) {
+            event.setNewCurrent(0);
+        }
     
         if (getConfig().getBoolean("features.redstone")) {
             return;
@@ -579,6 +599,10 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onJukeboxRedstone(BlockRedstoneEvent event) {
 
+        if (!getConfig().getBoolean("features.all-redstone")) {
+            event.setNewCurrent(0);
+        }
+        
         if (getConfig().getBoolean("features.jukebox-redstone")) {
             return;
         }
@@ -629,7 +653,11 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onPressurePlatePhysics(BlockPhysicsEvent event) {
-    
+
+        if (!getConfig().getBoolean("features.all-redstone")) {
+            event.setNewCurrent(0);
+        }
+        
         if (getConfig().getBoolean("features.pressure-plates")) {
             return;
         }
@@ -643,7 +671,11 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onPressurePlateRedstone(BlockRedstoneEvent event) {
-    
+
+        if (!getConfig().getBoolean("features.all-redstone")) {
+            event.setNewCurrent(0);
+        }
+        
         if (getConfig().getBoolean("features.pressure-plates")) {
             return;
         }
@@ -655,7 +687,11 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onRails(BlockRedstoneEvent event) {
-    
+
+        if (!getConfig().getBoolean("features.all-redstone")) {
+            event.setNewCurrent(0);
+        }
+
         if (getConfig().getBoolean("features.rails")) {
             return;
         }
