@@ -449,7 +449,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     public void onRedstonePhysics(BlockPhysicsEvent event) {
 
         if (!getConfig().getBoolean("features.all-redstone")) {
-            event.setNewCurrent(0);
             return;
         }
         
@@ -470,7 +469,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     public void onPistonExtend(BlockPistonExtendEvent event) {
 
         if (!getConfig().getBoolean("features.all-redstone")) {
-            event.setNewCurrent(0);
             return;
         }
         
@@ -483,7 +481,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     public void onPistonRetract(BlockPistonRetractEvent event) {
 
         if (!getConfig().getBoolean("features.all-redstone")) {
-            event.setNewCurrent(0);
             return;
         }
         
@@ -497,7 +494,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     public void onDispense(BlockDispenseEvent event) {
 
         if (!getConfig().getBoolean("features.all-redstone")) {
-            event.setNewCurrent(0);
             return;
         }
         
@@ -579,7 +575,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     public void onRedstoneInteract(PlayerInteractEvent event) {
 
         if (!getConfig().getBoolean("features.all-redstone")) {
-            event.setNewCurrent(0);
             return;
         }
     
@@ -606,7 +601,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     public void onJukeboxRedstone(BlockRedstoneEvent event) {
 
         if (!getConfig().getBoolean("features.all-redstone")) {
-            event.setNewCurrent(0);
             return;
         }
         
@@ -639,7 +633,11 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onLampPhysics(BlockPhysicsEvent event) {
-    
+
+        if (!getConfig().getBoolean("features.all-redstone")) {
+            return;
+        }
+        
         if (getConfig().getBoolean("features.redstone-lamp")) {
             return;
         }
@@ -662,7 +660,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     public void onPressurePlatePhysics(BlockPhysicsEvent event) {
 
         if (!getConfig().getBoolean("features.all-redstone")) {
-            event.setNewCurrent(0);
             return;
         }
         
@@ -681,7 +678,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     public void onPressurePlateRedstone(BlockRedstoneEvent event) {
 
         if (!getConfig().getBoolean("features.all-redstone")) {
-            event.setNewCurrent(0);
             return;
         }
         
@@ -698,7 +694,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     public void onRails(BlockRedstoneEvent event) {
 
         if (!getConfig().getBoolean("features.all-redstone")) {
-            event.setNewCurrent(0);
             return;
         }
 
