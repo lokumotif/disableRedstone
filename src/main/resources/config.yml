@@ -16,6 +16,7 @@ features:
   pressure-plates: true
   tnt: true
   explosions: true
+  rails: true
   pistons: true
   dispensers: true
   hoppers: true
