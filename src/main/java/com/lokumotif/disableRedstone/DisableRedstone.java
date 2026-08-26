@@ -613,12 +613,12 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         Block jukebox = event.getBlock();
     
         for (BlockFace face : BlockFace.values()) {
-            if (face == BlockFace.UP
-                    || face == BlockFace.DOWN
-                    || face == BlockFace.NORTH
-                    || face == BlockFace.SOUTH
-                    || face == BlockFace.EAST
-                    || face == BlockFace.WEST) {
+            if (face == BlockFace.UP ||
+                face == BlockFace.DOWN ||
+                face == BlockFace.NORTH ||
+                face == BlockFace.SOUTH ||
+                face == BlockFace.EAST ||
+                face == BlockFace.WEST) {
     
                 Block neighbour = jukebox.getRelative(face);
     
