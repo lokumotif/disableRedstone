@@ -6,7 +6,7 @@
 disabled-blocks:
 
 features:
-  all-redstones: true
+  all-redstone: true
   redstone: true
   lever: true
   fence-gates: true
