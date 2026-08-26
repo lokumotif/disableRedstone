@@ -440,7 +440,7 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         }
 
         if (!getConfig().getBoolean("features.lever")
-                && isButtons(event.getBlock().getType())) {
+                && isLever(event.getBlock().getType())) {
             event.setNewCurrent(0);
         }
     }
@@ -599,20 +599,38 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onJukeboxRedstone(BlockRedstoneEvent event) {
-
-        if (!getConfig().getBoolean("features.all-redstone")) {
-            return;
+    
+        if (getConfig().getBoolean("features.all-redstone")) {
+            if (getConfig().getBoolean("features.jukebox-redstone")) {
+                return;
+            }
         }
-        
-        if (getConfig().getBoolean("features.jukebox-redstone")) {
+    
+        if (event.getBlock().getType() != Material.JUKEBOX) {
             return;
         }
     
-        if (event.getBlock().getType() == Material.JUKEBOX) {
-            event.setNewCurrent(0);
+        event.setNewCurrent(0);
+    
+        Block jukebox = event.getBlock();
+    
+        for (BlockFace face : BlockFace.values()) {
+            if (face == BlockFace.UP
+                    || face == BlockFace.DOWN
+                    || face == BlockFace.NORTH
+                    || face == BlockFace.SOUTH
+                    || face == BlockFace.EAST
+                    || face == BlockFace.WEST) {
+    
+                Block neighbour = jukebox.getRelative(face);
+    
+                if (neighbour.getType() == Material.REDSTONE_WIRE) {
+                    neighbour.setType(Material.REDSTONE_WIRE, false);
+                }
+            }
         }
     }
-    
+        
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onJukeboxInteract(PlayerInteractEvent event) {
     
