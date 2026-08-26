@@ -6,17 +6,19 @@
 disabled-blocks:
 
 features:
+  all-redstones: true
   redstone: true
-  pistons: true
-  dispensers: true
-  hoppers: true
-  tnt: true
-  explosions: true
-  jukebox-redstone: true
-  jukebox-disc: true
-  redstone-lamp: true
+  lever: true
   fence-gates: true
   buttons: true
   trapdoors: true
   doors: true
   pressure-plates: true
+  tnt: true
+  explosions: true
+  pistons: true
+  dispensers: true
+  hoppers: true
+  jukebox-disc: true
+  redstone-lamp: true
+
