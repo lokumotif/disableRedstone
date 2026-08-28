@@ -447,22 +447,25 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onRedstonePhysics(BlockPhysicsEvent event) {
-
-        if (!getConfig().getBoolean("features.all-redstone")) {
-            return;
-        }
-        
-        if (getConfig().getBoolean("features.redstone")) {
-            return;
-        }
     
         Block block = event.getBlock();
     
-        if (block.getType() == Material.REDSTONE_BLOCK) {
-            event.setCancelled(true);
+        if (!getConfig().getBoolean("features.all-redstone")) {
+    
+            if (isRedstoneControlledBlock(block.getType())) {
+                event.setCancelled(true);
+                return;
+            }
+        }
+    
+        if (!getConfig().getBoolean("features.redstone")) {
+    
+            if (block.getType() == Material.REDSTONE_BLOCK) {
+                event.setCancelled(true);
+                return;
+            }
         }
     }
-
     
     // Piston check
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
@@ -600,10 +603,8 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onJukeboxRedstone(BlockRedstoneEvent event) {
     
-        if (getConfig().getBoolean("features.all-redstone")) {
-            if (getConfig().getBoolean("features.jukebox-redstone")) {
-                return;
-            }
+        if (getConfig().getBoolean("features.jukebox-redstone")) {
+            return;
         }
     
         if (event.getBlock().getType() != Material.JUKEBOX) {
@@ -611,24 +612,6 @@ public final class DisableRedstone extends JavaPlugin implements Listener, Comma
         }
     
         event.setNewCurrent(0);
-    
-        Block jukebox = event.getBlock();
-    
-        for (BlockFace face : BlockFace.values()) {
-            if (face == BlockFace.UP ||
-                face == BlockFace.DOWN ||
-                face == BlockFace.NORTH ||
-                face == BlockFace.SOUTH ||
-                face == BlockFace.EAST ||
-                face == BlockFace.WEST) {
-    
-                Block neighbour = jukebox.getRelative(face);
-    
-                if (neighbour.getType() == Material.REDSTONE_WIRE) {
-                    neighbour.setType(Material.REDSTONE_WIRE, false);
-                }
-            }
-        }
     }
         
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
